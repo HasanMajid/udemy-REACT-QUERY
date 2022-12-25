@@ -25,9 +25,10 @@ async function updatePost(postId) {
 
 export function PostDetail({ post }) {
   // replace with useQuery
-  const { data, isLoading, isError, error } = useQuery("comments", () =>
-    fetchComments(post.id)
-  ); // data stays the same as long as the query key is the same; it does not fetch different comments for other posts
+  const { data, isLoading, isError, error } = useQuery(
+    ["comments", post.id], // adding makes the query unique and prevents it from using the same query for all posts
+    () => fetchComments(post.id)
+  ); 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{error.toString()}</div>;
 
